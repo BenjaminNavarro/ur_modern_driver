@@ -35,7 +35,7 @@
     <arg name="robot_ip" value="$(arg robot_ip)"/>
     <arg name="min_payload"  value="$(arg min_payload)"/>
     <arg name="max_payload"  value="$(arg max_payload)"/>
-    <arg name="prefix" default="" />
+    <arg name="prefix" default="$(arg prefix)" />
     <arg name="use_lowbandwidth_trajectory_follower" value="$(arg use_lowbandwidth_trajectory_follower)"/>
     <arg name="time_interval" value="$(arg time_interval)"/>
     <arg name="servoj_time" value="$(arg servoj_time)" />

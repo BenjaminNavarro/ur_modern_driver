@@ -11,16 +11,16 @@
 class HardwareInterface
 {
 public:
-  virtual bool write() = 0;
-  virtual void start()
-  {
-  }
-  virtual void stop()
-  {
-  }
-  virtual void reset()
-  {
-  }
+	virtual bool write() = 0;
+	virtual void start()
+	{
+	}
+	virtual void stop()
+	{
+	}
+	virtual void reset()
+	{
+	}
 };
 
 using hardware_interface::JointHandle;
@@ -28,56 +28,56 @@ using hardware_interface::JointHandle;
 class JointInterface : public hardware_interface::JointStateInterface
 {
 private:
-  std::array<double, 6> velocities_, positions_, efforts_;
+	std::array<double, 6> velocities_, positions_, efforts_;
 
 public:
-  JointInterface(std::vector<std::string> &joint_names);
-  void update(RTShared &packet);
+	JointInterface(std::vector<std::string> &joint_names);
+	void update(RTShared &packet);
 
-  typedef hardware_interface::JointStateInterface parent_type;
-  static const std::string INTERFACE_NAME;
+	typedef hardware_interface::JointStateInterface parent_type;
+	static const std::string INTERFACE_NAME;
 };
 
 class WrenchInterface : public hardware_interface::ForceTorqueSensorInterface
 {
-  std::array<double, 6> tcp_;
+	std::array<double, 6> tcp_;
 
 public:
-  WrenchInterface(std::string tcp_link);
-  void update(RTShared &packet);
-  typedef hardware_interface::ForceTorqueSensorInterface parent_type;
-  static const std::string INTERFACE_NAME;
+	WrenchInterface(std::string tcp_link);
+	void update(RTShared &packet);
+	typedef hardware_interface::ForceTorqueSensorInterface parent_type;
+	static const std::string INTERFACE_NAME;
 };
 
 class VelocityInterface : public HardwareInterface, public hardware_interface::VelocityJointInterface
 {
 private:
-  URCommander &commander_;
-  std::array<double, 6> velocity_cmd_, prev_velocity_cmd_;
-  double max_vel_change_;
+	URCommander &commander_;
+	std::array<double, 6> velocity_cmd_, prev_velocity_cmd_;
+	double max_vel_change_;
 
 public:
-  VelocityInterface(URCommander &commander, hardware_interface::JointStateInterface &js_interface,
-                    std::vector<std::string> &joint_names, double max_vel_change);
-  virtual bool write();
-  virtual void reset();
-  typedef hardware_interface::VelocityJointInterface parent_type;
-  static const std::string INTERFACE_NAME;
+	VelocityInterface(URCommander &commander, hardware_interface::JointStateInterface &js_interface,
+	                  std::vector<std::string> &joint_names, double max_vel_change);
+	virtual bool write();
+	virtual void reset();
+	typedef hardware_interface::VelocityJointInterface parent_type;
+	static const std::string INTERFACE_NAME;
 };
 
 class PositionInterface : public HardwareInterface, public hardware_interface::PositionJointInterface
 {
 private:
-  TrajectoryFollower &follower_;
-  std::array<double, 6> position_cmd_;
+	TrajectoryFollower &follower_;
+	std::array<double, 6> position_cmd_;
 
 public:
-  PositionInterface(TrajectoryFollower &follower, hardware_interface::JointStateInterface &js_interface,
-                    std::vector<std::string> &joint_names);
-  virtual bool write();
-  virtual void start();
-  virtual void stop();
+	PositionInterface(TrajectoryFollower &follower, hardware_interface::JointStateInterface &js_interface,
+	                  std::vector<std::string> &joint_names);
+	virtual bool write();
+	virtual void start();
+	virtual void stop();
 
-  typedef hardware_interface::PositionJointInterface parent_type;
-  static const std::string INTERFACE_NAME;
+	typedef hardware_interface::PositionJointInterface parent_type;
+	static const std::string INTERFACE_NAME;
 };
